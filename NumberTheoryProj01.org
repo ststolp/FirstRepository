@@ -1,0 +1,97 @@
+#+BEGIN_SRC emacs-lisp
+(progn 
+  (setq letters "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+(defun caesar-encrypt(text k)
+      (setq i 0)
+    (setq ans "")
+      (while (< i (length text))
+       (if (eq (equal (string (elt text i)) " ") nil)
+         (progn
+             (setq index (+ (string-match (string (elt text i)) letters) k))
+             (if (> index 25)
+                 (setq z (- index 26))
+                 (setq z index))
+           (setq ans (concat ans (string (elt letters z))))
+            (setq i (+ i 1)))
+          (progn
+            (setq i (+ i 1))
+              (setq ans (concat ans " ")))))
+        (setq ans ans))
+
+ (defun caesar-decrypt(text k)
+      (setq i 0)
+        (setq ans "")
+              (while (< i (length text))
+        (if (eq (equal (string (elt text i)) " ") nil)
+         (progn
+             (setq index (- (string-match (string (elt text i)) letters) k))
+             (if (< index 0)
+                 (setq z (+ index 26))
+                 (setq z index))
+           (setq ans (concat ans (string (elt letters z))))
+            (setq i (+ i 1)))
+          (progn
+            (setq i (+ i 1))
+                            (setq ans (concat ans " ")))))
+        (setq ans ans))
+
+   (defun vigenere-char-encrypt (plain-text-char key-word-char)
+          (setq index-to-move-by (string-match plain-text-char letters))
+            (setq index (+ (string-match key-word-char letters) index-to-move-by))
+             (if (> index 25)
+                 (setq z (- index 26))
+                 (setq z index))
+               (setq encrypted-char (string (elt letters z))))
+
+    (defun vigenere-char-decrypt (cypher-text-char key-word-char)
+            (setq index (- (string-match cypher-text-char letters) (string-match key-word-char letters)))
+             (if (< index 0)
+                 (setq z (+ index 26))
+                 (setq z index))
+               (setq encrypted-char (string (elt letters z))))
+
+(defun vigenere-encrypt (plain-text key-word)
+     (setq plain-i 0)
+     (setq key-i 0)
+     (setq ans "")
+        (while (< plain-i (length plain-text))
+           (if (eq (equal (string (elt plain-text plain-i)) " ") nil)
+              (progn
+                  (if (> key-i (- (length key-word) 1))
+                      (setq key-i 0)
+                      (setq key-i key-i))
+                  (setq ans (concat ans (vigenere-char-encrypt (string (elt plain-text plain-i)) (string (elt key-word key-i)))))
+                  (setq plain-i (+ plain-i 1))
+                  (setq key-i (+ key-i 1)))
+              (progn
+                  (setq plain-i (+ plain-i 1))
+                  (setq ans (concat ans " ")))))
+     (setq ans ans))
+
+   (defun vigenere-decrypt (cypher-text key-word-text)
+        (setq cypher-i 0)
+          (setq key-i 0)
+          (setq ans "")
+        (while (< cypher-i (length cypher-text))
+           (if (eq (equal (string (elt cypher-text cypher-i)) " ") nil)
+              (progn
+                   (if (> key-i (- (length key-word-text) 1))
+                     (setq key-i 0)
+                     (setq key-i key-i))
+                  (setq ans (concat ans (vigenere-char-decrypt (string (elt cypher-text cypher-i)) (string (elt key-word-text key-i)))))
+                 (setq cypher-i (+ cypher-i 1))
+                  (setq key-i (+ key-i 1)))
+              (progn
+                 (setq cypher-i (+ cypher-i 1))
+                 (setq ans (concat ans " ")))))
+            (setq ans ans)))
+
+  (setq caesar-key 5)
+  (setq code (caesar-encrypt "THE QUICK BROWN FOX JUMPED OVER THE LAZY DOGS" caesar-key))
+  (caesar-decrypt code caesar-key)
+    (setq vigenere-plain-text "THE QUICK BROWN FOX JUMPED OVER THE LAZY DOGS")
+     (setq vigenere-key-word "POLYALPHABETIC")
+       (setq vigenere-encryption (vigenere-encrypt vigenere-plain-text vigenere-key-word))
+      (vigenere-decrypt vigenere-encryption vigenere-key-word)
+#+END_SRC
