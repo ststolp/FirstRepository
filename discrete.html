@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+    </head>
+    <body>
+        <h1>This is the radius of the largest circle</h1>
+        <p id="demo"></p>
+        <br><br><br>
+
+        <p>Question 2 calculator</p>
+        <input id="prob2" type="text" size="100">
+        <button onclick="calc2()">Calculate</button><br>
+        <p id="calcAns"></p>
+
+        <h1>Prefix Calculator</h1>
+        <input id="calc3Input" type="text" size="100" >
+        <button onclick="calc3()" >Calculate</button><br>
+        <p id="calc3Ans"></p>
+
+        <p>Input a list</p>
+        <input id="cdr" type="text" size="100">
+        <button onclick="car()">Get first Element</button><br>
+        <p id="cdrAns"></p>
+
+        <p>Input a list</p>
+        <input id="prob4" type="text" size="100">
+        <button onclick="cdr()">Get all elements but the first</button><br>
+        <p id="prob4Ans"></p>
+
+        <p>Input a list...</p>
+        <input id="list" type="text" size="100"><br>
+        <p>... then an element.</p>
+        <input id="element" type="text" size="100">
+        <button onclick="prob5onclick()">Put element at the beginning of the list</button><br>
+        <p id="prob5Ans"></p>
+
+        <script>
+         function radius(r, n) {
+             var cos = Math.cos(3.14159265359/n);
+             r = r / cos;
+             //alert("r=" + r);
+             n++;
+             //alert("n=" + n);
+             if (n <= 9600) {
+                 r = radius(r, n);
+             }
+             //   alert("r=" + r);
+             return r;
+         }
+
+         function car() {
+             //             alert("in car");
+             var string = document.getElementById("cdr").value;
+             //           alert("string= " + string);
+             var arr = string.split(" ");
+             var first = arr[0];
+             //          alert("first= " + first);
+             document.getElementById("cdrAns").innerHTML = first;
+         }
+
+         function cdr() {
+             var string = document.getElementById("prob4").value;
+             var arr = string.split(" ");
+             //arr[0] = "";
+             arr.shift();
+             var newString = arr[0];
+             for (var i = 1; i < arr.length ; i++) {
+                 newString = newString + " " + arr[i];
+             }
+             document.getElementById("prob4Ans").innerHTML = newString;
+         }
+
+         function cons(list, element) {
+             var arr = list.split(" ");
+             //var newArray = {element};
+             //newArray = newArray + arr;
+             arr.unshift(element);
+             var newList = arr[0];
+             for (var i = 1; i < arr.length; i++) {
+                 newList = newList + " " + arr[i];
+             }
+             return newList;
+         }
+
+         function prob5onclick() {
+             var list = document.getElementById("list").value;
+             var element = document.getElementById("element").value;
+             document.getElementById("prob5Ans").innerHTML = cons(list, element);
+         }
+
+         function calc2() {
+             var string = document.getElementById("prob2").value;
+             var arr = string.split(" ");
+             var ans = 0;
+             for (var i = 0; i < arr.length;i++ ) {
+                 if (arr[i] == '+') {
+
+                     for (var b = 0; (b < arr.length ) && (b + 1 < arr.length) && (arr[b] != '+'); b += 2) {
+                         //           alert("(before) ans = " + ans + "b = " + b);
+                         arr[b] = parseInt(arr[b]);
+                         //ans = ans + arr[b];
+                         //         alert("ans = " + ans);
+                         if((arr[b + 1] != '+')){
+
+                             arr[b + 1] = parseInt(arr[b + 1]);
+                             ans = ans + arr[b] + arr[b + 1];
+                             //             alert("next ans = " + ans + "b + 1 = " + (b + 1) + "i = " + i + "arr[b + 1] = " + arr[b + 1]);
+                         }
+                         if (arr[b + 1] == '+') {
+                             ans = ans + arr[b];
+                             //            alert("next ans = " + ans + "b + 1 = " + (b + 1) + "i = " + i + "arr[b + 1] = " + arr[b + 1]);
+                         }
+                     }
+                 }
+             }
+
+             document.getElementById("calcAns").innerHTML = ans;
+         }
+
+         function calc3() {
+             var string = document.getElementById("calc3Input").value;
+             var arr = string.split(" ");
+             var ans = 0;
+             for (var i = 0; i < arr.length; i++) {
+                 if ((arr[i] != '+') && (arr[i] != '-') && (arr[i] != '*') && (arr[i] != '/')) {
+                     arr[i] = parseInt(arr[i]);
+                 }
+             }
+             for (var i = arr.length - 1; i >= 0; i--) {
+
+                 if ((arr[i] == '+') || (arr[i] == '-') || (arr[i] == '*') || (arr[i] == '/')) {
+                     switch(arr[i]) {
+                         case '+':
+                             {
+                                 var ans = arr[i + 1] + arr[i + 2];
+                                 arr.splice(i, 3, ans);
+                             }
+                             break;
+                         case '-':
+                             {
+                                 var ans = arr[i + 2] - arr[i + 1];
+                                 arr.splice(i, 3, ans);
+                             }
+                             break;
+                         case '*':
+                             {
+                                 var ans = arr[i + 2] * arr[i + 1];
+                                 arr.splice(i, 3, ans);
+                             }
+                             break;
+                         case '/':
+                             {
+                                 var ans = arr[i + 2] / arr[i + 1];
+                                 arr.splice(i, 3, ans);
+                             }
+                             break;
+                     }
+                 }
+             }
+             document.getElementById("calc3Ans").innerHTML = ans;
+         }
+         document.getElementById("demo").innerHTML = radius(1, 3);
+
+
+        </script>
+
+    </body>
+</html>
