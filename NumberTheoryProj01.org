@@ -85,8 +85,43 @@
               (progn
                  (setq cypher-i (+ cypher-i 1))
                  (setq ans (concat ans " ")))))
-            (setq ans ans)))
+            (setq ans ans))
 
+(defun password-checker (password)
+       (setq digit "1234567890")
+    (setq special "!@#$%^&*<>~{}")
+                 (setq score 0)
+         (loop for l from 0 to 25
+            if (string-match (string (elt letters l)) password)
+               do (progn
+                   (setq score (+ score 1))
+                    (setq l 26)))
+          (loop for s from 0 to 13
+          if (string-match (string (elt special s)) password)
+                do (progn
+                    (setq score (+ score 1))
+                      (setq s 13)))
+          (loop for d from 0 to 9
+             if (string-match (string (elt digit d)) password)
+                do (progn
+                     (setq score (+ score 1))
+                      (setq d 10)))
+    (setq strong "strong")
+          (if (> (length password) 5)
+                (if (> (length password) 8)
+                    (setq score (+ score 3))
+                     (setq score (+ score 2))))
+                 (setq score score)
+             (cond  ((eq score 2)
+                      (setq val "weak"))
+                      ((eq score 3)
+                        (setq val "poor"))
+                       ((eq score 4)
+                         (setq val "so-so"))
+                       ((eq score 5)
+                        (setq val "good")) 
+                      ("strong"))))
+                                 
   (setq caesar-key 5)
   (setq code (caesar-encrypt "THE QUICK BROWN FOX JUMPED OVER THE LAZY DOGS" caesar-key))
   (caesar-decrypt code caesar-key)
@@ -94,4 +129,8 @@
      (setq vigenere-key-word "POLYALPHABETIC")
        (setq vigenere-encryption (vigenere-encrypt vigenere-plain-text vigenere-key-word))
       (vigenere-decrypt vigenere-encryption vigenere-key-word)
+  (password-checker "sdfsf")
+
+(string-match "U" "u")
+   (string-match lower "hello")
 #+END_SRC
