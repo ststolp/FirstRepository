@@ -2,6 +2,11 @@
 <html>
     <head>
         <title>Page Title</title>
+        <script>
+         var letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y"];
+            var matrices = [[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],
+            [],[]],[[],[],[],[],[]]];
+        </script>
     </head>
     <body>
         <h1>This is the radius of the largest circle</h1>
@@ -35,7 +40,184 @@
         <button onclick="prob5onclick()">Put element at the beginning of the list</button><br>
         <p id="prob5Ans"></p>
 
+        <h1>Phillips cipher</h1>
+        <p>Type a key word</p>
+        <input id="keyWord" type="text" size="50">
+        <button onclick="makematrices()">Generate Matrices</button><br>
+        <p>Input plaintext</p>
+        <input id="phillipsPlain" type="text" size="200">
+        <button onclick="PhillipsEncrypt()">Generate ciphertext</button><br>
+        <p id="ciphertext"></p>
+        <p>Input ciphertext</p>
+        <input id="phillipsCipher" type="text" size="100">
+        <button onclick="PhillipsDecrypt()">Decrypt ciphertext</button><br>
+        <p id="PhillipsDecrypted"></p>
+
         <script>
+         function makematrices() {
+            var keyWord = document.getElementById("keyWord").value;
+            keyWord = keyWord.toUpperCase();
+                 for (var i = 0; i < 25; i++ ) {
+                     var regExp = new RegExp(letters[i]); 
+                    if (regExp.test(keyWord)) { delete letters[i]; }
+                 }
+             for (var a = 0; a < keyWord.length; a++) {
+                 for (var b = 0; b < keyWord.length; b++) {
+                     if (a != b) {
+                         if (keyWord[a] == keyWord[b]) {
+                             if (a < b) { keyWord = keyWord.replace(keyWord[b], ""); }
+                             else { keyWord = keyWord.replace(keyWord[a], ""); }
+                        }
+                     }
+                 }
+             }
+             for(var i = 0; i < keyWord.length; i++) {
+                 if(keyWord[i] == " ") {  keyWord = keyWord.replace(keyWord[i], "");}
+             }
+               var r = 0;
+             for ( var k = 0; k < keyWord.length; r++) {
+                  if ((r % 2) == 0) { 
+                      for (var c = 0; (c < 5) && (k < keyWord.length); c++, k++) {
+                          matrices[0][r][c] = keyWord[k];
+                      }
+                  } else {
+                       for (var c = 4; (c > -1) && (k < keyWord.length); c--, k++)
+                         matrices[0][r][c] = keyWord[k];
+                  }
+             }
+                r--;
+            var a = 0;
+             if ((r % 2) == 0) {
+                 for (; c < 5; ) {
+                     //alert("filling row " + c);
+                     if(letters[a] === undefined) { a++; }
+                     else {
+                         matrices[0][r][c] = letters[a];
+                         a++;
+                         c++;
+                     }
+                    }
+             } else {
+                 for (; c > -1; ) {
+                     if (letters[a] === undefined) { a++; }
+                     else {
+                         matrices[0][r][c] = letters[a];
+                         a++;
+                         c--;
+                     }
+                 }
+        }
+      r++;
+             for (  ; a < letters.length; r++) {
+                 if ((r % 2) == 0) {
+                   for (var c = 0; (c < 5) && (a < letters.length); ) {
+                       if (letters[a] === undefined) { a++; }
+                       else {
+                           matrices[0][r][c] = letters[a];
+                           a++;
+                           c++;
+                       }
+                 }
+                 } else {
+                     for (var c = 4; (c > -1) && (a < letters.length); ) {
+                         if (letters[a] === undefined) { a++;}
+                         else {
+                             matrices[0][r][c] = letters[a];
+                             c--;
+                             a++;
+                         }
+                     }
+                 }
+             }
+
+            //m: matrix, sa: switch A, sb: switch B,  r: row
+             for (var m = 1, sa = 0, sb = 1; sb < 4 ; m++, sa++, sb++) {
+                 for (var r = 0; r < 5; r++) 
+                     matrices[m][r] = matrices[m - 1][r];
+                 var tempA = matrices[m][sa];
+                 matrices[m][sa] = matrices[m][sb];
+                 matrices[m][sb] = tempA;
+             }
+
+            for (var sb = 1, sa = 0; sb < 5 ; m++, sa++, sb++) {
+                 for (var r = 0; r < 5; r++) 
+                     matrices[m][r] = matrices[m - 1][r];
+                 var tempA = matrices[m][sa];
+                 matrices[m][sa] = matrices[m][sb];
+                 matrices[m][sb] = tempA;
+            }
+         }
+         function PhillipsEncrypt() {
+             var plaintext = document.getElementById("phillipsPlain").value;
+            for(var i = 0; i < plaintext.length; i++) {
+               if(plaintext[i] == " ") { plaintext = plaintext.replace(plaintext[i], ""); }
+            }
+            plaintext = plaintext.toUpperCase();
+             var nc = 0, nr = 0, ct = "";
+             for (var m = 0, pt = 0; pt < plaintext.length ; m++) {           //loop through all the matrices
+                 if (m == 7) {m = 0;}
+                 for (var i = 0; i < 5 && pt < plaintext.length; ) {                       // encrypt 5 letters with every matrix
+                     for (var r = 0; r < 5 && i < 5; r++) {
+                         for (var c = 0; c < 5 && pt < plaintext.length && i < 5; c++) {
+                             if(plaintext[pt] === undefined) {
+                                 pt++;
+                                 c--;
+                             } else {
+                             if (matrices[m][r][c] == plaintext[pt]) {
+                                 i++;
+                                 nc = c + 1;
+                                 nr = r + 1;
+                                 if (nc == 5) {  nc = 0; }
+                                 if (nr == 5){   nr = 0; }
+                                 ct = ct + matrices[m][nr][nc];
+                                 pt++;
+                                 c = 5;
+                                 r = 5;
+                             }
+                             }
+                         }
+                     }
+                 }
+             }
+            document.getElementById("ciphertext").value = ct;
+            document.getElementById("ciphertext").innerHTML = ct;
+         }
+         function PhillipsDecrypt() {
+             var ciphertext = document.getElementById("phillipsCipher").value;
+             ciphertext = ciphertext.toUpperCase();
+            for(var i = 0; i < ciphertext.length; i++) {
+               if(ciphertext[i] == " ") 
+                  ciphertext = ciphertext.replace(ciphertext[i], "");
+            }
+             var pt = "", nc = 0, nr = 0;
+             for (var m = 0, ct = 0; ct < ciphertext.length ; m++) {           //loop through all the matrices
+                 if (m == 7) {m = 0;}
+                 for (var i = 0; i < 5 && ct < ciphertext.length; ) {                       // encrypt 5 letters with every matrix
+                     for (var r = 0; r < 5 && i < 5; r++) {
+                         for (var c = 0; c < 5 && ct < ciphertext.length && i < 5; c++) {
+                             if (ciphertext[ct] == " ") {
+                                 ct++;
+                                 c--;
+                                 pt = pt + " ";
+                             } else {
+                             if (matrices[m][r][c] == ciphertext[ct]) {
+                                 i++;
+                                 nc = c - 1;
+                                 nr = r - 1;
+                                 if (nc == -1) {  nc = 4; }
+                                 if (nr == -1){   nr = 4; }
+                                 pt = pt + matrices[m][nr][nc];
+                                 ct++;
+                                 c = 5;
+                                 r = 5;
+                             }
+                             }
+                         }
+                     }
+                 }
+             }
+                 document.getElementById("PhillipsDecrypted").innerHTML = pt; 
+         }
          function radius(r, n) {
              var cos = Math.cos(3.14159265359/n);
              r = r / cos;
@@ -102,7 +284,6 @@
                          //ans = ans + arr[b];
                          //         alert("ans = " + ans);
                          if((arr[b + 1] != '+')){
-
                              arr[b + 1] = parseInt(arr[b + 1]);
                              ans = ans + arr[b] + arr[b + 1];
                              //             alert("next ans = " + ans + "b + 1 = " + (b + 1) + "i = " + i + "arr[b + 1] = " + arr[b + 1]);
@@ -114,18 +295,15 @@
                      }
                  }
              }
-
              document.getElementById("calcAns").innerHTML = ans;
          }
-
          function calc3() {
              var string = document.getElementById("calc3Input").value;
              var arr = string.split(" ");
              var ans = 0;
              for (var i = 0; i < arr.length; i++) {
-                 if ((arr[i] != '+') && (arr[i] != '-') && (arr[i] != '*') && (arr[i] != '/')) {
+                 if ((arr[i] != '+') && (arr[i] != '-') && (arr[i] != '*') && (arr[i] != '/')) 
                      arr[i] = parseInt(arr[i]);
-                 }
              }
              for (var i = arr.length - 1; i >= 0; i--) {
 
@@ -161,9 +339,6 @@
              document.getElementById("calc3Ans").innerHTML = ans;
          }
          document.getElementById("demo").innerHTML = radius(1, 3);
-
-
         </script>
-
     </body>
 </html>

@@ -95,7 +95,7 @@
             if (string-match (string (elt letters l)) password)
                do (progn
                    (setq score (+ score 1))
-                    (setq l 26)))
+                    (setq l 30)))
           (loop for s from 0 to 13
           if (string-match (string (elt special s)) password)
                 do (progn
@@ -129,8 +129,12 @@
      (setq vigenere-key-word "POLYALPHABETIC")
        (setq vigenere-encryption (vigenere-encrypt vigenere-plain-text vigenere-key-word))
       (vigenere-decrypt vigenere-encryption vigenere-key-word)
-  (password-checker "sdfsf")
+  (password-checker "s")
 
-(string-match "U" "u")
-   (string-match lower "hello")
+
+#+END_SRC
+
+#+BEGIN_SRC javascript
+ 
+
 #+END_SRC
