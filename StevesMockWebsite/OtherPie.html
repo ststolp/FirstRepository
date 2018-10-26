@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+    <meta name="viewport" content="width=device-width, inital-scale=1.0">
+<script type="text/javascript">
+window.onload = function() {
+    let housing = localStorage.getItem("house");
+    let entertainment = localStorage.getItem("entertain");
+    let gas = localStorage.getItem("gas");
+    let misall = localStorage.getItem("miscell");
+    let food = localStorage.getItem("food");
+    let auto = localStorage.getItem("auto");
+    var chart = new CanvasJS.Chart("chartContainer", {
+        title:{
+            text: "Spending Chart"
+        },
+        legend: {
+            maxWidth: 350,
+            maxWidth: 120
+        },
+        data: [
+            {
+            type: "pie",
+			showInLegend: true,
+			legendText: "{indexLabel}",
+			dataPoints: [
+				{ y: housing, indexLabel: "Housing" },
+				{ y: entertainment, indexLabel: "Entertainment" },
+				{ y: gas, indexLabel: "Gas" },
+				{ y: misall, indexLabel: "Misallaneous"},
+				{ y: food, indexLabel: "Food" },
+				{ y: auto, indexLabel: "Auto Insurance"},
+        ]
+            }
+            ]
+    });
+    chart.render();
+}
+</script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+</body>
+</html>

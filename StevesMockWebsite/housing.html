@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+    function newItem() {
+    let item = document.createElement("p");
+    item.innerHTML = "<p>" + document.getElementById("item").value + " $" + document.getElementById("price").value + "</p>";
+    let price = parseFloat(document.getElementById("price").value);
+    document.getElementById("list").appendChild(item);
+    if (typeof(Storage !== "undefined") && typeof(Storage) !== null) {
+        if (localStorage.getItem("hou") !== "undefined" && localStorage.getItem("hou") !== null) {
+            let newList = localStorage.getItem("hou") + item.innerHTML;
+            localStorage.setItem("hou", newList);
+        } else {
+            window.localStorage.setItem("hou", item.innerHTML);
+        }
+        if (localStorage.getItem("house") !== "undefined" && localStorage.getItem("hou") !== null) {
+            let newTotal = parseFloat(localStorage.getItem("house")) + price;
+            localStorage.setItem("house", newTotal);
+        } else {
+            localStorage.setItem("house", price);
+        } 
+    }
+    myFunction();
+ }
+ function myFunction() {
+     if (typeof localStorage.getItem("hou") !== "undefined" && typeof(Storage) !== "undefined") {
+         let theItem = document.createElement("p");
+         let item = window.localStorage.getItem("hou");
+         document.getElementById("list").innerHTML = item;
+     }
+         if (localStorage.getItem("planned_housing") !== null) {
+             document.getElementById("planned_output").innerHTML = "Planned: $" + localStorage.getItem("planned_housing");
+             if (localStorage.getItem("house") !== null) {
+                 let balance = parseFloat(localStorage.getItem("planned_housing")) - parseFloat(localStorage.getItem("house"));
+                 document.getElementById("balance").innerHTML = "Balance: $" + balance;
+             }
+         }
+     }
+ function setPlan() {
+     document.getElementById("planned_output").innerHTML = "Planned: $" + document.getElementById("planned_input").value;
+     localStorage.setItem("planned_housing", parseFloat(document.getElementById("planned_input").value));
+ }
+    </script>
+<style>
+</style>
+</head>
+<body onload="myFunction()">
+<h1>Housing</h1>
+<p>Planned housing spending</p>
+<input type="text" id="planned_input" onchange="setPlan()">
+<p id="planned_output"></p>
+<p id="balance"></p>
+<div id="list"></div>
+<p>Add Item</p>
+<input id="item" type="text">
+<input id="price" type="text" onchange="newItem()">
+</body>
+</html>

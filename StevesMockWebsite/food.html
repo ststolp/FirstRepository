@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+    <meta name="viewport" content="width=device-width, inital-scale=1.0">
+    <script>
+        function newItem() {
+            let item = document.createElement("p");
+            item.innerHTML = "<p>" + document.getElementById("item").value + " $" + document.getElementById("price").value + "</p>";
+            document.getElementById("list").appendChild(item);
+            let price = parseFloat(document.getElementById("price").value);
+            if (typeof(Storage) !== "undefined" && typeof(Storage) !== null) {
+                if (localStorage.getItem("foo") !== "undefined" && localStorage.getItem("foo") !== null) {
+                    let newList = localStorage.getItem("foo") + item.innerHTML;
+                    localStorage.setItem("foo", newList);
+                } else {
+                    localStorage.setItem("foo", item.innerHTML);
+                }
+                if (localStorage.getItem("food") !== "undefined" && localStorage.getItem("foo") !== null) {
+                    let newTotal = parseFloat(localStorage.getItem("food")) + price;
+                    localStorage.setItem("food", newTotal);
+                } else {
+                    localStorage.setItem("food", price);
+                }
+            }
+            myFunction();
+        }
+        function myFunction() {
+            if (typeof localStorage.getItem("foo") !== "undefined") {
+                let theItem = document.createElement("p");
+                let item = localStorage.getItem("foo");
+                document.getElementById("list").innerHTML = item;
+            }
+            if (localStorage.getItem("planned_food") !== null) {
+                document.getElementById("planned_output").innerHTML = "Planned: $" + localStorage.getItem("planned_food");
+                if (localStorage.getItem("food") !== null) {
+                    let balance = parseFloat(localStorage.getItem("planned_food")) - parseFloat(localStorage.getItem("food"));
+                    document.getElementById("balance").innerHTML = "Balance: $" + balance;
+                }
+            }
+        }
+        function setPlan() {
+            document.getElementById("planned_output").innerHTML = "Planned: $" + document.getElementById("planned_input").value;
+            localStorage.setItem("planned_food", parseFloat(document.getElementById("planned_input").value));
+        }
+        </script>
+<style>
+</style>
+</head>
+<body onload="myFunction()">
+<h1>Food</h1>
+<p>Food planned spending</p>
+<input id="planned_input" onchange="setPlan()">
+<p id="planned_output"></p>
+<p id="balance"></p>
+<div id = "list"></div>
+<p>Add Item</p>
+<input id="item" type="text">
+<input id="price" type="text" onchange="newItem()">
+</body>
+</html>

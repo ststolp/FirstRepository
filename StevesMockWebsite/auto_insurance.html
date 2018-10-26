@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+    <meta name="viewport" content="width=device-width, inital-scale=1.0">
+    <script>
+        function newItem() {
+            let item = document.createElement("p");
+            item.innerHTML = "<p>" + document.getElementById("item").value + " $" + document.getElementById("price").value + "</p>";
+            document.getElementById("list").appendChild(item);
+            let price = parseFloat(document.getElementById("price").value);
+            if (typeof(Storage) !== "undefined" && typeof(Storage) !== null) {
+                if (localStorage.getItem("aut") !== "undefined" && localStorage.getItem("aut") !== null) {
+                    let newList = localStorage.getItem("aut") + item.innerHTML;
+                    localStorage.setItem("aut", newList);
+                } else {
+                    localStorage.setItem("aut", item.innerHTML);
+                }
+                if (localStorage.getItem("auto") !== "undefined" && localStorage.getItem("aut") !== null) {
+                    let newTotal = parseFloat(localStorage.getItem("auto")) + price;
+                    localStorage.setItem("auto", newTotal);
+                } else {
+                    localStorage.setItem("auto", price);
+                }
+            }
+            myFunction();
+         }
+         function myFunction() {
+             if (typeof localStorage.getItem("aut") !== "undefined" && typeof (Storage) !== null) {
+                 let theItem = document.createElement("p");
+                 let item = localStorage.getItem("aut");
+                 document.getElementById("list").innerHTML = item;
+             }
+             if (localStorage.getItem("planned_auto") !== null) {
+                 document.getElementById("planned_output").innerHTML = "Planned: $" + localStorage.getItem("planned_auto");
+                 if (localStorage.getItem("auto") !== null) {
+                     let balance = parseFloat(localStorage.getItem("planned_auto")) - parseFloat(localStorage.getItem("auto"));
+                    document.getElementById("balance").innerHTML = "Balance: $" + balance; 
+                 }
+             }
+         }
+         function setPlan() {
+             document.getElementById("planned_output").innerHTML = "Planned: $" + document.getElementById("planned_input").value;
+             localStorage.setItem("planned_auto", parseFloat(document.getElementById("planned_input").value));
+         }
+          </script>
+<style>
+</style>
+</head>
+<body onload="myFunction()">
+<h1>Auto Insurance</h1>
+<p>Auto Insurance planned spending</p>
+<input type="text" id="planned_input" onchange="setPlan()">
+<p id="planned_output"></p>
+<p id="balance"></p>
+<div id="list"></div>
+<p>Add Item</p>
+<input id="item" type="text">
+<input id="price" type="text" onchange="newItem()">
+</body>
+</html>
