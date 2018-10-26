@@ -1,11 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<!= have the spending categories be elements (.createElement) and have new items be
+ it's children: (.appendChild)  =>
+
 <head>
-<title>Steve's Place, Games</title>
+<title>Your Budget</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
-    </script>
-    </head>
+    function setFunction() {
+        let total_atctual = 0.00;
+       document.getElementById("income_output").innerHTML = "$" + document.getElementById("income_input").value;
+       if (localStorage.getItem("house") !== null) {
+        document.getElementById("housing_output").innerHTML = "$" + localStorage.getItem("house");
+        total_actual += parseFloat(localStorage.getItem("house"));
+       }
+         if (localStorage.getItem("auto") !== null) {
+        document.getElementById("auto_output").innerHTML = "$" + localStorage.getItem("auto");
+        total_actual += parseFloat(localStorage.getItem("auto"));
+    }
+       if (localStorage.getItem("food") !== null) {
+        document.getElementById("food_output").innerHTML = "$" + localStorage.getItem("food");
+        total_atctual += parseFloat(localStorage.getItem("food"));
+       }
+         if (localStorage.getItem("gas") !== null) {
+        document.getElementById("gas_output").innerHTML = "$" + localStorage.getItem("gas");
+        total_atctual += parseFloat(localStorage.getItem("gas"));
+         }
+         if (localStorage.getItem("entertain") !== null) {
+        document.getElementById("entertain_output").innerHTML = "$" + localStorage.getItem("entertain");
+        total_atctual += parseFloat(localStorage.getItem("entertain"));
+         }
+         if (localStorage.getItem("miscell") !== null) {
+        document.getElementById("mis_output").innerHTML = "$" + localStorage.getItem("miscell");
+        total_atctual += parseFloat(localStorage.getItem("miscell"));
+         }
+        document.getElementById("total_planned_output").innerHTML = "$" + document.getElementById("total_planned_input").value;
+        document.getElementById("total_actual_output").innerHTML = "$" + parseFloat(total_atctual);
+        let balance = parseFloat(document.getElementById("income_input").value) - parseFloat(document.getElementById("total_actual_input").value);
+        document.getElementById("total_balance_output").innerHTML = "$" + balance;
+}
+</script>
+<style>
+* {
+    box-sizing: border-box;    
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 4px;
+    background-color:black; 
+}
+
+.row > div.column1 {
+    flex: 70%;
+    background-color:aqua;
+    padding: 1%; 
+    color:floralwhite;
+}
+
+.row > div.column2 {
+    flex: 25%;
+    background-color:blue;
+    padding: 1%;
+}
+
+.row > div.dropdown > div.dropbtn {
+    background-color:deepskyblue;
+    color: white;
+    padding: 2%;
+    font-size: 16px;
+    border:none;
+}
+
+.row > div.dropdown {
+    position: relative;
+    display: inline-block;
+    flex: 70%;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color:white;
+    box-shadow: 9px;
+    z-index: 1;
+}
+
+.row > div.dropdown-content p {
+    color: blue;
+    text-decoration: none;
+    display: block;
+}
+
+.row > div.dropdown-content p:hover {
+    background-color:white;
+}
+
+.row > div.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.row > div.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+</style>
+</head>
     <body>
-        <h1>Games</h1>
+    <div id="body">
+    <h1>Your Budget</h1>
+       <div class="row">
+          <div class="column1">
+            Income
+            <input type="text" id="income_input" value="0" onchange="setFunction()">
+          </div>
+       <div class="column2" id="income_output">
+            $0.00
+       </div>
+       <div class="dropdown">
+       <button
+          class="dropbtn">Housing</button>
+          <a href="./housing.html">Add Item/Edit</a>  
+       </div>
+       <div class="column2" id="housing_output"> 
+          $0.00</div>
+          <div class="dropdown">
+             <button class="dropbtn">Auto Insurance</button>
+             <a href="./auto_insurance.html">Add Item/Edit</a>
+       </div>
+       <div class="column2" id="auto_output">     
+            total $0.00</div>
+          <div class="dropdown">
+            <button class="dropbtn">Food</button>
+            <a href="./food.html">Add Item/Edit</a> 
+       </div>
+       <div class="column2" id="food_output">
+            total $0.00
+       </div>    
+       <div class="dropdown">
+          <button class="dropbtn">Gas</button>
+            <a href="./Gas.html">Add Item/Edit</a>
+        </div>
+        <div class="column2" id="gas_output">
+            total $0.00
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Entertainment</button>
+            <a href="./entertainment.html">Add Item/Edit</a>
+        </div>
+        <div class="column2" id="entertain_output">
+           total $0.00
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Miscellaneous</button>
+            <a href="./misallaneous.html">Add Item/Edit</a>
+        </div>
+        <div class="column2" id="mis_output">
+            total $0.00
+        </div>
+        <div class="column1">
+           <p>total Planned</p>
+           <input type="text" id="total_planned_input" onchange="setFunction()" value="0">
+        </div>
+        <div class="column2" id="total_planned_output">
+            <p>$0.00</p>
+        </div>
+        <div class="column1">
+            <p>total Actual</p>
+        </div>
+        <div class="column2" id="total_actual_output">
+            <p>$0.00</p>
+        </div>
+        <div class="column1">
+            <p>total Balance</p>
+        </div>
+        <div class="column2" id="total_balance_output">
+            <p>$0.00</p>
+
+        </div>
+
+    </div>
+    <div>
+        <a href="./OtherPie.html">Spending Pie Chart</a>
+    </div>
+     </div>   
     </body>
 </html>
