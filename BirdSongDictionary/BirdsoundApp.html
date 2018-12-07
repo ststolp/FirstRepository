@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    button {
+        transition: transform 0.3s ease-out 55ms;
+    }
+    h1 {
+        color: lightgreen;
+        font-family: Tahoma, Geneva, sans-serif;
+    }
+    p {
+        color:rgb(160, 245, 160);
+        text-decoration: none;
+    }
+
+    img {
+        width: 2%;
+        height:auto;
+        box-shadow: 0 4px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    }
+    a:hover {
+        transition: .5s ease;
+        opacity: 0.3;
+    }
+    a:ontouch {
+        transition: .7s ease;
+        opacity: 0.3;
+    } 
+    </style>
+<script>
+
+function load() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let json =JSON.parse(this.responseText);
+            json.recordings.forEach(function (item){
+               let link = document.createElement("A");
+               let img = document.createElement("IMG");
+               img.setAttribute("src", "./Bird_button.jpg");
+                //link.setAttribute("type", "image")
+                let t = document.createTextNode(item.en);
+                let str = item.file.replace("//", "http://");
+                link.setAttribute("href", str);
+                let name = document.createElement("P");
+                name.appendChild(t);
+                link.appendChild(img);
+                let line = document.createElement("P");
+                document.getElementById("content").appendChild(name);
+                document.getElementById("content").appendChild(link);
+                document.getElementById("content").appendChild(line);
+           });
+            // document.getElementById("content").innerHTML = string;   
+        }
+    };
+    xhttp.open("POST", './BirdRecordingsJson.txt', true);
+    xhttp.send();
+}
+</script>
+</head>
+<body style="margin: 0;box-sizing: border-box;background-color:rgb(16, 179, 16);border-style: solid;border-width: 5px;color:yellow; padding: 2%" onload="load()">
+
+<h1>Bird Calls</h1>
+<p id="content"></p>
+</body>
+</html>
