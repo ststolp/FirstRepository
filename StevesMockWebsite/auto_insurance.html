@@ -25,14 +25,14 @@
             myFunction();
          }
          function myFunction() {
-             if (typeof localStorage.getItem("aut") !== "undefined" && typeof (Storage) !== null) {
+             if (typeof localStorage.getItem("aut") !== "undefined" && typeof (Storage) !== null && localStorage.getItem("aut") !== "NaN") {
                  let theItem = document.createElement("p");
                  let item = localStorage.getItem("aut");
                  document.getElementById("list").innerHTML = item;
              }
-             if (localStorage.getItem("planned_auto") !== null) {
+             if (localStorage.getItem("planned_auto") !== null && localStorage.getItem("planned_auto") !== "NaN") {
                  document.getElementById("planned_output").innerHTML = "Planned: $" + localStorage.getItem("planned_auto");
-                 if (localStorage.getItem("auto") !== null) {
+                 if (localStorage.getItem("auto") !== null && localStorage.getItem("auto") !== "NaN") {
                      let balance = parseFloat(localStorage.getItem("planned_auto")) - parseFloat(localStorage.getItem("auto"));
                     document.getElementById("balance").innerHTML = "Balance: $" + balance; 
                  }

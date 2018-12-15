@@ -3,9 +3,11 @@
     <head>
         <title>Page Title</title>
         <script>
+         var alphabet = "abcdefghijklmnopqrstuvwxyz";
          var letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y"];
             var matrices = [[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],[],[]],[[],[],[],
-            [],[]],[[],[],[],[],[]]];
+                                                                                                                                   [],[]],[[],[],[],[],[]]];
+         var phi = 0, n = 0, e = 0;
         </script>
     </head>
     <body>
@@ -53,14 +55,237 @@
         <button onclick="PhillipsDecrypt()">Decrypt ciphertext</button><br>
         <p id="PhillipsDecrypted"></p>
 
+        <br><br>
+        <p>Provide three numbers</p>
+        <input id="num1" type="text">
+        <input id="num2" type="text">
+        <input id="num3" type="text">
+        <input id="num4" type="text">
+        <input id="num5" type="text">
+        <input id="num6" type="text">
+        <button onclick="Threedigit()">Calculate</button><br>
+        <p id="positivesimultaneous"></p>
+
+        <h1>Vigenere Decrypt ciphertext</h1>
+        <p>Type key word</p>
+        <input id="vigenereKey" type="text">
+        <p>Type ciphertext</p>
+        <input id="vigenereCiphertext" type="text">
+        <button onclick="vigenereDecrypt()">Decrypt</button><br>
+        <h2 id="VigenereDecrypted"></h2>
+
+        <h1>RSA Encryption</h1>
+        <p>Type plaintext</p>
+        <input id="RSAplaintext" type="text">
+        <button onclick="RSAEncrypt()">Ecrypt</button><br>
+        <p id="RSAciphertext"></p>
+
+        <p>Type ciphertext</p>
+        <input id="RSAcipherInput" type ="text">
+        <button onclick ="RSADecrypt()">Decrypt</button><br>
+        <p id="RSAplainOutput"></p>
+
+        <h1>Rail Fence Cipher</h1>
+        <p> type plaintext</p>
+        <input id="railplain" type="text">
+        <p>type key</p>
+        <input id="numRails" type="text">
+        <button onclick="RailFenceEncrypt()">Encrypt</button><br>
+        <p id="Railciphertext"></p>
+
+        <p>type ciphertext</p>
+        <input id="railcipher" type="text">
+        <p>type key</p>
+        <input id="numRails2" type="text">
+        <button onclick="RailFenceDecrypt()">Decrypt</button>
+        <p id="Railoutput"></p>
+
         <script>
+
+            function RailFenceDecrypt() {
+               var railcipher = document.getElementById("railcipher").value;
+               var rails = parseInt(document.getElementById("numRails2").value);
+               var plaintext = "";
+            var array = [[],[],[],[],[],[],[],[],[],[],[]];
+            var q = railcipher.length / rails;
+            if (railcipher.length % rails != 0)
+            q++;
+
+            for (var b = 0; b < rails && c < railcipher.length; b++) {
+                 for (var a = 0; a < q && c < railcipher.length && railcipher[c]; a++) {
+                array[b][a] = railcipher[c];
+                c++;
+            }
+            }
+            alert(array);
+            alert(railcipher);
+            for (var c = 0; c < q; c++) {
+                 for (var r = 0; r < rails && array[r][c]; r++) {
+                     plaintext = plaintext + array[r][c];
+                 }
+            }
+               document.getElementById("Railoutput").innerHTML = plaintext;
+        }
+
+            function RailFenceEncrypt() {
+            var plaintext = document.getElementById("railplain").value;
+            var rails = parseInt(document.getElementById("numRails").value);
+            var ciphertext = "";
+            var array = [[],[],[],[],[],[],[],[],[],[]];
+            var c = 0;
+            for (var a = 0; c < plaintext.length; a++) {
+                  for (var b = 0; b < rails && c < plaintext.length; b++) {
+                     array[b][a] = plaintext[c];
+                      c++;
+                 }
+            }
+            for (var r = 0; r < rails; r++) {
+                 for (var c = 0; array[r][c]; c++) {
+                ciphertext = ciphertext + array[r][c];
+                }
+            }
+
+            document.getElementById("Railciphertext").innerHTML = ciphertext;
+           }
+
+         function EucleadAlgorithmTest(oneOne, oneTwo, twoOne, twoTwo, phi) {
+             //This is a recursive algorithm that finds d. I found these steps from
+             // a youtube video that I converted to code.
+           //round variable x down. (shave off anything right of the decimal)
+             var x = Math.floor(oneOne / twoOne);
+             var x2 = x * twoOne;
+             var x3 = x * twoTwo;
+             var twoOneTemp = twoOne;
+             var twoTwoTemp = twoTwo;
+             twoOne = oneOne - x2;
+             twoTwo = oneTwo - x3;
+             //if we get a negative number, mod it with phi
+             while (twoOne < 0) { twoOne = twoOne + phi; }
+             while (twoTwo < 0) { twoTwo = twoTwo + phi; }
+             oneOne = twoOneTemp;
+             oneTwo = twoTwoTemp;
+            //if the first number in the second row isn't one, start the process over again.
+             if (twoOne != 1) { return EucleadAlgorithmTest(oneOne, oneTwo, twoOne, twoTwo, phi); }
+           //when the first number in the second row is one, we've found d which is the second number in the second row.
+             else { return twoTwo; }
+         }
+
+         function RSAEncrypt() {
+             var plainText = document.getElementById("RSAplaintext").value;
+             var cipherText = new Array();
+            e = 7;
+            var p = 5;
+            var q = 7;
+            n = p * q;
+             phi = (p - 1) * (q - 1);
+             plainText = plainText.toLowerCase();
+             for (var i = 0; i < plainText.length; i++) {
+                 var m = alphabet.indexOf(plainText[i]);
+                 //implementation of modular exponentiation
+                 var c = Math.pow(m, e) % n;
+                 //populate the cipherText string with the values of c
+                 cipherText[i] = c;
+             }
+             document.getElementById("RSAciphertext").innerHTML = cipherText;
+         }
+
+         function RSADecrypt() {
+             var cipherText = document.getElementById("RSAcipherInput").value;
+             cipherText = cipherText.split(",");
+             var plainText = "";
+             // find d using the EucleadAlgorithm above
+             var d = EucleadAlgorithmTest(phi, phi, e, 1, phi);
+             for (var i = 0; i < cipherText.length; i++) {
+                 var c = cipherText[i];
+                //implementation of modular exponentiation
+                 var m = Math.pow(c, d) % n;
+                 //populate the plainText string with letters using the m index
+                 plainText = plainText + alphabet[m];
+             }
+             document.getElementById("RSAplainOutput").innerHTML = plainText;
+         }
+
+         //The vigenerechardecrypt decrypts one letter based on the key word letter that aligns with it
+         function vigenerechardecrypt(textChar, keyWordChar) {
+             //find where the ciphertext falls in the alphabet and subtract it with where the key Word falls in
+             // the alphabet
+             var index = alphabet.indexOf(textChar) - alphabet.indexOf(keyWordChar);
+             //When the index (the one accessing the alphabet) is a negative number, we mod it with 26
+             // by adding 26.
+             if (index < 0) {
+                 var z = index + 26;
+             } else {
+              var z = index;
+             }
+             // the letter associated with the new index is the plaintext letter :)
+             return alphabet[z];
+       }
+      function vigenereDecrypt() {
+            var cypherText = document.getElementById("vigenereCiphertext").value;
+             var keyWordText = document.getElementById("vigenereKey").value;
+             cypherText = cypherText.toLowerCase();
+             keyWordText = keyWordText.toLowerCase();
+          var cipherI = 0;
+          var keyI = 0;
+          var ans = "";
+             while (cipherI < cypherText.length) {
+               if(cypherText[cipherI] != "(" && cypherText[cipherI] != ")" && cypherText[cipherI] != "?") {
+                 var check = new RegExp(cypherText[cipherI]);
+                 if (alphabet.search(check) > -1 && (check != "/./")) {
+                   if (keyI > (keyWordText.length - 1)) 
+                       keyI = 0;
+               var char = vigenerechardecrypt(cypherText[cipherI], keyWordText[keyI]);
+                   ans = ans + char;
+                 cipherI++;
+                  keyI++;
+                 }else{
+                     ans = ans + cypherText[cipherI];
+                     cipherI++;
+                 }
+               } else {
+                   ans = ans + cypherText[cipherI];
+                   cipherI++;
+               }
+         }
+               document.getElementById("VigenereDecrypted").innerHTML = ans;
+         }
+         function Threedigit() {
+             var num1 = document.getElementById("num1").value;
+             num1 = parseInt(num1);
+             var num2 = document.getElementById("num2").value;
+             num2 = parseInt(num2);
+             var num3 = document.getElementById("num3").value;
+             num3 = parseInt(num3);
+            var num4 = document.getElementById("num4").value;
+            num4 = parseInt(num4);
+            var num5 = document.getElementById("num5").value;
+            num5 = parseInt(num5);
+            var num6 = document.getElementById("num6").value;
+             num6 = parseInt(num6);
+             var check1 = num4 % num1;
+             var check2 = num5 % num2;
+             var check3 = num6 % num3;
+             var i = 2;
+             var isTrue = true;
+             while(isTrue) {
+                 var val1 = i * num3 + num6;
+                 var val2 = val1 % num2;
+                 var val3 = val1 % num1;
+                 if (val2 == check2 && val3 == check1){ isTrue = false;}
+                 i++;
+             }
+             document.getElementById("positivesimultaneous").innerHTML = val1;
+         }
          function makematrices() {
             var keyWord = document.getElementById("keyWord").value;
-            keyWord = keyWord.toUpperCase();
+             keyWord = keyWord.toUpperCase();
+             //remove all of the letters in the 'letters' string that appear in the keword
+             //this is so that we don't have any repeats of letters in the matrices
                  for (var i = 0; i < 25; i++ ) {
                      var regExp = new RegExp(letters[i]); 
                     if (regExp.test(keyWord)) { delete letters[i]; }
                  }
+             //remove any repeats of letters within the keyword
              for (var a = 0; a < keyWord.length; a++) {
                  for (var b = 0; b < keyWord.length; b++) {
                      if (a != b) {
@@ -71,25 +296,29 @@
                      }
                  }
              }
+             //remove any spaces from the key word
              for(var i = 0; i < keyWord.length; i++) {
                  if(keyWord[i] == " ") {  keyWord = keyWord.replace(keyWord[i], "");}
              }
+             //fill the first matrix with the key word
                var r = 0;
              for ( var k = 0; k < keyWord.length; r++) {
+                 //add letters left to right on even rows
                   if ((r % 2) == 0) { 
                       for (var c = 0; (c < 5) && (k < keyWord.length); c++, k++) {
                           matrices[0][r][c] = keyWord[k];
                       }
+              //add letters right to left on odd rows
                   } else {
                        for (var c = 4; (c > -1) && (k < keyWord.length); c--, k++)
                          matrices[0][r][c] = keyWord[k];
                   }
              }
+          //fill the rest of the row we last wrote on
                 r--;
             var a = 0;
              if ((r % 2) == 0) {
                  for (; c < 5; ) {
-                     //alert("filling row " + c);
                      if(letters[a] === undefined) { a++; }
                      else {
                          matrices[0][r][c] = letters[a];
@@ -106,7 +335,8 @@
                          c--;
                      }
                  }
-        }
+             }
+             //populate the rest of the first matrix
       r++;
              for (  ; a < letters.length; r++) {
                  if ((r % 2) == 0) {
@@ -130,7 +360,9 @@
                  }
              }
 
-            //m: matrix, sa: switch A, sb: switch B,  r: row
+             //m: matrix, sa: switch A, sb: switch B,  r: row
+             //fill the next three matrices by having the first row of the first matrix to float down by
+             //one row for each matrix.
              for (var m = 1, sa = 0, sb = 1; sb < 4 ; m++, sa++, sb++) {
                  for (var r = 0; r < 5; r++) 
                      matrices[m][r] = matrices[m - 1][r];
@@ -138,7 +370,7 @@
                  matrices[m][sa] = matrices[m][sb];
                  matrices[m][sb] = tempA;
              }
-
+        //create the remaining 4 matrices by floating the 2nd (currently the first) row down
             for (var sb = 1, sa = 0; sb < 5 ; m++, sa++, sb++) {
                  for (var r = 0; r < 5; r++) 
                      matrices[m][r] = matrices[m - 1][r];
@@ -147,12 +379,14 @@
                  matrices[m][sb] = tempA;
             }
          }
+
          function PhillipsEncrypt() {
              var plaintext = document.getElementById("phillipsPlain").value;
             for(var i = 0; i < plaintext.length; i++) {
                if(plaintext[i] == " ") { plaintext = plaintext.replace(plaintext[i], ""); }
             }
-            plaintext = plaintext.toUpperCase();
+             plaintext = plaintext.toUpperCase();
+            //nc is New Column, nr is New Row, and ct is CipherText
              var nc = 0, nr = 0, ct = "";
              for (var m = 0, pt = 0; pt < plaintext.length ; m++) {           //loop through all the matrices
                  if (m == 7) {m = 0;}
@@ -162,11 +396,19 @@
                              if(plaintext[pt] === undefined) {
                                  pt++;
                                  c--;
+                     //Encrypt Z as Z
+                             } else if (plaintext[pt] == 'Z') {
+                                 ct = ct + 'Z';
+                                 pt++;
+                                 i++;
+                                 c = 5;
+                                 r = 5;
                              } else {
                              if (matrices[m][r][c] == plaintext[pt]) {
                                  i++;
                                  nc = c + 1;
                                  nr = r + 1;
+                              //if nc or nr are 5, this means we need to loop around
                                  if (nc == 5) {  nc = 0; }
                                  if (nr == 5){   nr = 0; }
                                  ct = ct + matrices[m][nr][nc];
@@ -199,11 +441,19 @@
                                  ct++;
                                  c--;
                                  pt = pt + " ";
+                        //Decrypt z as z
+                             } else if (ciphertext[ct] == 'Z') {
+                                 pt = pt + 'Z';
+                                ct++;
+                                 i++;
+                                 c = 5;
+                                 r = 5;
                              } else {
                              if (matrices[m][r][c] == ciphertext[ct]) {
                                  i++;
                                  nc = c - 1;
                                  nr = r - 1;
+                     //same as encrypting except we word backwards to find the plaintext
                                  if (nc == -1) {  nc = 4; }
                                  if (nr == -1){   nr = 4; }
                                  pt = pt + matrices[m][nr][nc];

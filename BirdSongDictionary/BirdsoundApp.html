@@ -11,7 +11,7 @@
         font-family: Tahoma, Geneva, sans-serif;
     }
     p {
-        color:rgb(160, 245, 160);
+        color: rgb(181, 243, 181);
         text-decoration: none;
     }
 
@@ -28,41 +28,95 @@
         transition: .7s ease;
         opacity: 0.3;
     } 
+    
+    .content {
+        padding: 0 18px;
+       overflow: hidden;  
+        display: none;
+    }
+    
+    .collapsible {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+    .active, .collapsible:hover {
+        background-color: #555
+    } 
     </style>
-<script>
 
-function load() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            let json =JSON.parse(this.responseText);
-            json.recordings.forEach(function (item){
-               let link = document.createElement("A");
-               let img = document.createElement("IMG");
-               img.setAttribute("src", "./Bird_button.jpg");
-                //link.setAttribute("type", "image")
-                let t = document.createTextNode(item.en);
-                let str = item.file.replace("//", "http://");
-                link.setAttribute("href", str);
-                let name = document.createElement("P");
-                name.appendChild(t);
-                link.appendChild(img);
-                let line = document.createElement("P");
-                document.getElementById("content").appendChild(name);
-                document.getElementById("content").appendChild(link);
-                document.getElementById("content").appendChild(line);
-           });
-            // document.getElementById("content").innerHTML = string;   
-        }
-    };
-    xhttp.open("POST", './BirdRecordingsJson.txt', true);
-    xhttp.send();
-}
-</script>
 </head>
 <body style="margin: 0;box-sizing: border-box;background-color:rgb(16, 179, 16);border-style: solid;border-width: 5px;color:yellow; padding: 2%" onload="load()">
 
 <h1>Bird Calls</h1>
 <p id="content"></p>
+<script>
+function load() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let json =JSON.parse(this.responseText);
+            let dropdown = document.createElement("BUTTON");
+            dropdown.setAttribute("class", "collapsible");
+            let div = document.createElement("DIV");
+            div.setAttribute("class", "content");
+            document.getElementById('content').appendChild(dropdown);
+            document.getElementById('content').appendChild(div);
+            let spieces = 'Grey Tinamou';
+            let name = document.createTextNode(spieces);
+            dropdown.appendChild(name);
+            json.recordings.forEach(function (item){
+                let newSpieces = item.en;
+                if (spieces != newSpieces) {
+                    spieces = newSpieces;
+                    let newDropdown = document.createElement("BUTTON");
+                    dropdown = newDropdown;
+                    let newDiv = document.createElement("DIV");
+                    div = newDiv;
+                    div.setAttribute("class", "content");
+                    dropdown.setAttribute("class", "collapsible");
+                    let name = document.createTextNode(spieces);
+                    dropdown.appendChild(name);
+                    document.getElementById('content').appendChild(dropdown);
+                    document.getElementById('content').appendChild(div);
+                }
+               let link = document.createElement("A");
+               let img = document.createElement("IMG");
+               img.setAttribute("src", "./Bird_button.jpg");
+                let t = document.createTextNode(item.en);
+                let str = item.file.replace("//", "http://");
+                link.setAttribute("href", str);
+                //dropdown.appendChild(t);
+                link.appendChild(img);
+                div.appendChild(link);
+                let line = document.createElement("P");
+                let something = document.createTextNode("something");
+                line.appendChild(something);
+                div.appendChild(line);
+           });
+        }
+    };
+    xhttp.open("GET", './BirdRecordingsJson.json', true);
+    xhttp.send();
+}
+let coll = document.getElementsByClassName("collapsible");
+for (let i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
 </body>
 </html>

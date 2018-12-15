@@ -1,6 +1,6 @@
 #+BEGIN_SRC emacs-lisp
 (progn 
-  (setq letters "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+  (setq letters "abcdefghijklmnopqrstuvwxyz")
 
 (defun caesar-encrypt(text k)
       (setq i 0)
@@ -125,16 +125,12 @@
   (setq caesar-key 5)
   (setq code (caesar-encrypt "THE QUICK BROWN FOX JUMPED OVER THE LAZY DOGS" caesar-key))
   (caesar-decrypt code caesar-key)
-    (setq vigenere-plain-text "THE QUICK BROWN FOX JUMPED OVER THE LAZY DOGS")
+    (setq vigenere-plain-text "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
      (setq vigenere-key-word "POLYALPHABETIC")
        (setq vigenere-encryption (vigenere-encrypt vigenere-plain-text vigenere-key-word))
       (vigenere-decrypt vigenere-encryption vigenere-key-word)
-  (password-checker "s")
 
+  (password-checker "brotherbenningisawesome")
 
-#+END_SRC
-
-#+BEGIN_SRC javascript
- 
 
 #+END_SRC
