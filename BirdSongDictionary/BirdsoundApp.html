@@ -92,31 +92,31 @@ function load() {
                 let t = document.createTextNode(item.en);
                 let str = item.file.replace("//", "http://");
                 link.setAttribute("href", str);
-                //dropdown.appendChild(t);
                 link.appendChild(img);
                 div.appendChild(link);
                 let line = document.createElement("P");
-                let something = document.createTextNode("something");
-                line.appendChild(something);
                 div.appendChild(line);
            });
         }
     };
     xhttp.open("GET", './BirdRecordingsJson.json', true);
     xhttp.send();
-}
-let coll = document.getElementsByClassName("collapsible");
-for (let i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-}
+
+alert("loading");
+   let coll = document.getElementsByClassName("collapsible");
+   for (let i = 0; i < coll.length; i++) {
+     coll[i].addEventListener("click", function() {
+       this.classList.toggle("active");
+       var content = this.nextElementSibling;
+       if (content.style.display === "block") {
+         content.style.display = "none";
+       } else {
+         content.style.display = "block";
+       }
+        });
+      }
+   }
+
 </script>
 </body>
 </html>
