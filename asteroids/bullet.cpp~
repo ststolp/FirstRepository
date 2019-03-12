@@ -1,0 +1,67 @@
+#include "bullet.h"
+#include <cmath>
+#include "flyingObject.h"
+
+// Put your bullet methods here
+
+/***************************************
+ * static variable: bulletLife
+ * Description: initiate bullet life to 40 to last for
+ * 40 frames.
+ **************************************/
+int Bullet :: bulletLife = 40;
+
+/*****************************************
+ * Destroy bullet.
+ ****************************************/
+Bullet :: ~Bullet()
+{
+}
+
+/*****************************************
+ * Function: advance
+ * Description: Advance bullet. Check to see if bullet
+ * is off screen and make sure it "wraps."
+ ****************************************/
+void Bullet :: advance()
+{
+   bulletLife--;
+   if (bulletLife > -1)
+   {
+      FlyingObject::advance();
+      if (FlyingObject::getPoint().getX() > 200)
+         FlyingObject::setPoint(-200, FlyingObject::getPoint().getY());
+      if (FlyingObject::getPoint().getX() < -200)
+         FlyingObject::setPoint(200, FlyingObject::getPoint().getY());
+      if (FlyingObject::getPoint().getY() > 200)
+         FlyingObject::setPoint(FlyingObject::getPoint().getX(), -200);
+      if (FlyingObject::getPoint().getY() < -200)
+         FlyingObject::setPoint(FlyingObject::getPoint().getX(), 200);
+   }
+   else if (bulletLife < 0)
+      FlyingObject::kill();
+}
+
+/****************************************************************
+ *  Function: fire
+ *  Description: The bullet initially gets the point of the ship and it's
+ *  velocity plus BULLET_SPEED.
+ **************************************************************/
+void Bullet :: fire(Point point, float angle, int dx, int dy )
+{
+   FlyingObject::setPoint(point.getX(), point.getY());
+   setAngle(angle);
+   Velocity velocity((BULLET_SPEED + dx) *
+                             (-cos (M_PI / 180.0 * angle)),
+                             (BULLET_SPEED + dy) *
+                             (sin(M_PI / 180.0 * angle)));
+   FlyingObject::setVelocity(velocity);
+}
+
+/****************************************************
+ * Draw bullet.
+ ***************************************************/
+void Bullet :: draw()
+{
+   drawDot(FlyingObject::getPoint());
+}

@@ -1,0 +1,32 @@
+#ifndef BULLET_H
+#define BULLET_H
+
+#define BULLET_SPEED 5
+#define BULLET_LIFE 40
+
+
+
+// Put your Bullet class here
+#include "flyingObject.h"
+#include "uiDraw.h"
+class Bullet : public FlyingObject
+{
+  private:
+   static int bulletLife;
+   float angle;
+  public:
+   Bullet() {}
+   int getBulletLife() const { return bulletLife;   }
+   void setBulletLife(int num) { this -> bulletLife = getBulletLife() - 1;  }
+   ~Bullet();
+   void advance();
+   void setAngle(int angle)    { this -> angle = angle;            }
+   float getAngle() const      { return angle;                     } 
+   void draw();
+   bool isAlive() const        { return FlyingObject::isAlive();   }
+   void fire(Point point, float angle, int dx, int dy);
+};
+
+
+
+#endif /* bullet_h */
