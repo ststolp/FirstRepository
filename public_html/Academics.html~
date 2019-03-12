@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+         <!-- This is assignment 6 -->
+  <html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="assign07.css">
+    <title>NSA Academics</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script>
+
+       </script>
+      </head>
+    <body>
+
+
+    <div class="col-2">
+      <h1 class="title"><span class="logo">N<sub class="sub">S</sub>A</span> NAVAL SPACE ACADEMY</h1>
+    </div>
+    <div class="menu">
+      <a href="assign07.html">Home</a>
+    </div>
+ 
+  <div class="flex-container">
+    <div class="label">
+      <p>Space Math</p>
+      <p>Space Survival</p>
+      <p>Dog Fights</p>
+      <p>Handling</p>
+     <p>Engine Optimization</p>
+   </div>
+ <div>
+<!--  <div class="layout"> -->
+  <h1>NSA Academics</h1>         
+   <p>Gain the skill set necessary to conquer the final frontier. Learn to be in top condition to battle in space. After all, you never know when you'll run
+      into space pirates.</p>
+    <img class="rwd" width="900px" src="Academics.jpg" alt="Spaceship">
+ </div>
+ </div>
+    <footer>
+      <h1>SPACE NAVAL ACADEMY</h1>
+       <p>2018 | 1-800-SPACE | System</p>
+    </footer>
+
+
+    </body>
+
+
+</html>

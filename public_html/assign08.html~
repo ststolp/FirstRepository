@@ -1,0 +1,169 @@
+  <!DOCTYPE html>
+         <!-- This is assignment 6 -->
+  <html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="assign08.css">
+    <title>AJAX</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <style>
+     body {
+        background-color: rgb(199, 222, 230);
+        margin-left: 30%;
+        margin-right: 30%;
+     }
+   div.content {
+    margin-top: 4%;
+    margin-bottom: 4%;
+   }
+    .center  {
+       background-color: rgb(187, 196, 240);
+       width: center;
+       border: 3px solid rgb(125, 113, 83);
+       color: rgb(47, 59, 79);
+       padding: 3%;
+      }
+     button {
+       background-color: rgb(170, 217, 179);
+       border: none;
+        color: rgb(60, 166, 112);
+        padding: 1% 2%;
+        text-align:center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 100%;
+        margin: 3px 2px;
+      
+      }
+  </style>
+  </head>
+   
+   <body>
+     <div class="content">
+
+    <!-- four buttons to choose four countries to receive the population of 10 cities from the selected country. -->  
+       <button type="button" onclick="handleUSA()">The United States of America</button>   
+       <button type="button" onclick="handleCanada()">Canada</button>  
+       <button type="button" onclick="handleMexico()">Mexico</button>
+       <button type="button" onclick="handleRussia()">Russia</button>
+     </div>
+    <div class="center">
+
+    <!-- use this box to fill with the response text from the server about city populations -->
+       <p id="box"></p>
+    </div>
+   <div class="content">
+          
+       <!-- User inputs a json file to retrieve from the server. -->
+     <input id="text" type="text" value="json.txt"> 
+     <button type="button" onclick="handleFile()">Submit file</button>
+   </div>
+  <div id="box2" class="center content">
+    
+    <!-- After parsing the json file, fill the object into this div -->
+  <div id="slist"></div>
+  </div>
+  <script>
+   var httpRequest;
+
+
+    function handleFile() {
+      httpRequest = new XMLHttpRequest;
+        httpRequest.onreadystatechange = function() {
+               if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+    
+                 var obj = JSON.parse(httpRequest.responseText);
+                 var list = "<table border='1'><tr><th>Student Name</th><th>Address</th><th>Major</th><th>GPA</th></tr>\n"; 
+                 
+                  for (var i = 0; i < obj.students.length; i++) {
+                      var address = obj.students[i].address;
+                      list = list + "<tr><td>" + obj.students[i].first + " " + 
+                             obj.students[i].last + "</td><td>" + address.city + " " + address.state + " " + address.zip + "</td><td>" +obj.students[i].major
+                           + "</td><td>" + obj.students[i].gpa + "</td></tr>\n";
+                   }
+              
+                  document.getElementById("slist").innerHTML = list;
+               }
+         };
+      var string = document.getElementById("text").value;
+      httpRequest.open("GET", "/~ercanbracks/cs213/" + string, true);
+      httpRequest.send();
+    }
+
+   function handleUSA()  {
+      httpRequest = new XMLHttpRequest;
+      httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState == 4 && httpRequest.status == 200) {
+            var text = "<b>City </b><b> Population</b></p><p>" + httpRequest.responseText;
+
+            var newText = text.replace(/\n/g, "</p><p>");
+
+            var final = newText;
+
+            document.getElementById("box").innerHTML = final;
+
+            }
+      };
+          httpRequest.open("GET", "/~ercanbracks/usa.txt", true);
+                   httpRequest.send();
+   }
+
+     function handleCanada()  {
+     httpRequest = new XMLHttpRequest;
+      httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState == 4 && httpRequest.status == 200) {
+            var text = "<b>City </b><b> Population</b></p><p>" + httpRequest.responseText;
+
+            var newText = text.replace(/\n/g, "</p><p>");
+          
+            var final = newText;
+
+            document.getElementById("box").innerHTML = final;
+            }
+     };
+          httpRequest.open("GET", "/~ercanbracks/canada.txt", true);
+                   httpRequest.send();
+      }
+     function handleMexico()  {
+     httpRequest = new XMLHttpRequest;
+      httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState == 4 && httpRequest.status == 200) {
+            var text = "<b>City </b><b> Population</b></p><p>" + httpRequest.responseText;
+
+            var newText = text.replace(/\n/g, "</p><p>");
+
+            var final = newText;
+
+            document.getElementById("box").innerHTML = final;
+
+            }
+     };
+          httpRequest.open("GET", "/~ercanbracks/mexico.txt", true);
+                   httpRequest.send();
+      }
+     function handleRussia()  {
+     httpRequest = new XMLHttpRequest;
+      httpRequest.onreadystatechange = function() {
+            if(httpRequest.readyState == 4 && httpRequest.status == 200) {
+            var text = "<b>City </b><b> Population</b></p><p>" + httpRequest.responseText;
+
+            var newText = text.replace(/\n/g, "</p><p>");
+
+            var final = newText;
+
+            document.getElementById("box").innerHTML = final;
+
+            }
+     };
+          httpRequest.open("GET", "/~ercanbracks/russia.txt", true);
+                   httpRequest.send();
+      }
+
+   
+  </script>
+
+  
+
+  </body>
+
+  </html>

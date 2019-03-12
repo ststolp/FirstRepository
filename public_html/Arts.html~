@@ -1,0 +1,40 @@
+  <!DOCTYPE html>
+         <!-- This is assignment 6 -->
+  <html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="assign07.css">
+    <title>NSA Gardening</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script>
+
+       </script>
+      </head>
+    <body>
+
+    <div class="col-2">
+      <h1 class="title"><span>N<sub>S</sub>A</span> NAVAL SPACE ACADEMY</h1>
+    </div>
+    <div class="menu">
+      <a href="assign07.html">Home</a>
+    </div>
+ <div class="flex-container">
+ <div>
+    <h1>NSA Gardening</h1>
+<!--  <div class="layout"> -->
+     <p>Here at Space Naval Academy, we value adding as much greenery to our surroundings as possible. Lets face it, space and computers make you crazy.<p>
+    <img class="rwd" width="300px" src="SpaceTree.jpg" alt="Tree in space">
+   </div>
+  </div>
+ <footer>
+      <h1>NAVAL SPACE ACADEMY</h1>
+       <p>2018 | 1-800-SPACE | System XYZ
+  </footer>
+  
+
+
+    </body>
+
+
+</html>

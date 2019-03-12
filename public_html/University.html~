@@ -1,0 +1,48 @@
+  <!DOCTYPE html>
+         <!-- This is assignment 6 -->
+  <html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="assign07.css">
+    <title>NSA University</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script>
+
+       </script>
+      </head>
+    <body>
+
+    <div class="col-2">
+      <h1 class="title"><span>N<sub>S</sub>A</span> NAVAL SPACE ACADEMY</h1>
+    </div>
+<!--  <div class="layout"> -->
+    <div class="menu">
+      <a href="assign07.html">Home</a>
+    </div>
+ 
+ <div class="flex-container">
+    <div>
+        <h1>NSA University</h1>
+
+        <p> Here at Naval Space Academy, students are given a wide variety of
+           majors to choose from including Ship Hacking, Ship Engineer, Space Cooking,
+           Space Secutiry, and Space Pilote.</p>
+        
+        <img class="rwd" width="300px" src="RedShip.jpg" alt="Space Ship">
+     </div>
+  </div>
+        
+   <footer>
+      <h1>NAVAL SPACE ACADEMY</h1>
+       <p>2018 | 1-800-SPACE | System XYZ
+   </footer>
+ 
+
+
+    </body>
+
+
+</html>
+  
+

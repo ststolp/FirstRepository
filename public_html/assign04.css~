@@ -1,0 +1,39 @@
+/* Assignment 4 external style sheet  */
+
+* {
+    box-sizing: border-box;
+    border-radius: 25px;
+}
+
+.text {
+    color: DarkOliveGreen;
+}
+    
+h1 {
+     font-family: Impact, sans-serif;
+     font-size: 35px;
+     text-align: center;
+}
+
+.sidemargin {
+    margin-left: 35%;
+}
+
+body {
+    background-color: DarkGreen;
+}
+
+.box {
+       border: 10px solid Chartreuse;
+       margin: 5% 20% 5% 20%;
+       padding: 20px;
+       background-color: DarkKhaki;
+}
+
+form input {
+     margin: 5px;
+     font-size: 15px;
+     font-family: gadget, sans-serif;
+     text-align: left;
+}
+     

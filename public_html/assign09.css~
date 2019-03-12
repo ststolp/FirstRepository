@@ -1,0 +1,42 @@
+/* Assignment  external style sheet  */
+
+  * {
+      box-sizing: border-box;
+      }
+
+/* All of the text color */
+  th, td {
+      border-collapse: collapse;
+      border-color: rgb(148, 105, 117);
+      background-color: rgb(244, 195, 54);
+      color: rgb(69, 87, 74);
+  }
+
+/* Header style  */    
+  h1 {
+       font-family: Impact, sans-serif;
+       font-size: 35px;
+       text-align: center;
+  }
+
+/* set side margin */
+  .sidemargin {
+      margin-left: 35%;
+  }
+
+/* give background color a dark green */
+  body {
+      background-color: rgb(102, 31, 23);
+  }
+
+/* calculator box style  */
+  .box {
+       border: 10px solid Chartreuse;
+       margin: 5% 20% 5% 20%;
+       padding: 20px;
+       background-color: DarkKhaki;
+  }
+
+
+ 
+     
