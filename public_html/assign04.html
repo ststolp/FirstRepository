@@ -1,0 +1,124 @@
+  <!DOCTYPE html>
+         <!-- This is assignment 4 -->
+  <html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="assign04.css">
+    <title>Mortgage Calculator</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--  JavaScript script  -->
+      <script type="text/javascript">
+
+  <!-- Function to calculate the monthly payment  -->
+        function calculateFunc () {
+          var Apr = document.getElementById("apr");
+          var Loan = document.getElementById("loanamount");
+          var Term = document.getElementById("loanterm");
+          aprpos = Apr.value.search(/^\d\.\d+$/);
+          loanT = Term.value.search(/^\d+$/);
+          loanA = Loan.value.search(/^\d+$/);
+         
+        <!-- Check if the APR input is filled and valid -->
+              if (Apr.value == "") {
+                    alert("Please fill in the APR.");
+                    document.getElementById("apr").focus();
+                    return 0;
+              } else if (aprpos != 0) {
+                    alert("Please enter the APR like: d.dd...");
+                    document.getElementById("apr").focus();
+                    return 0;
+              } else  {}
+      
+        <!-- Check if the loan term is filled and valid -->
+              if (Term.value == "") {
+                    alert("Please enter a loan term");
+                    document.getElementById("loanterm").focus();
+                    return 0;
+              } else if (loanT != 0) {
+                    alert("Please enter a valid number for the loan term.");
+                    document.getElementById("loanterm").focus();
+                    return 0; 
+              } else {}
+      
+        <!-- Check if the loan amount is filled and valid  -->
+              if (Loan.value == "") {
+                    alert("Please enter a loan amount.");
+                    document.getElementById("loanamount").focus();
+                    return 0;
+              } else if (loanA != 0) {
+                    alert("Please enter a valid number for the loan amount.");
+                    document.getElementById("loanamount").focus();
+                    return 0;
+              } else {}
+          var c = Apr.value;
+          c /= 1200;
+          var n = Term.value;
+          n *= 12;
+    <!--   Calculate (1 + c )^n portion of formula -->
+          var power = Math.pow(1 + c, n);
+    <!-- LoanAmount -->
+          var LoanAmount = document.getElementById("loanamount").value;
+          LoanAmount = LoanAmount * ((c * power) / (power - 1));
+          LoanAmount = LoanAmount.toFixed(2); 
+          document.getElementById("monthlypayment").value = LoanAmount;
+          document.getElementById("monthlypayment").disabled = true;
+        }
+   
+  <!--  Function: Set focus to first field  -->
+        function firstField () {
+          document.getElementById("apr").focus();
+          document.getElementById("monthlypayment").disabled = false;
+          document.getElementById("monthlypayment").value = "";
+        }
+ 
+ <!-- Function: Set focus to second field -->
+        function secField () {
+          document.getElementById("loanterm").focus();
+          document.getElementById("monthlypayment").disabled = false;
+          document.getElementById("monthlypayment").value = "";
+        }
+
+ <!-- Function: Set focus to third field -->
+        function thirdField () {
+          document.getElementById("loanamount").focus();
+          document.getElementById("monthlypayment").disabled = false;
+          document.getElementById("monthlypayment").value = "";
+        }
+      </script>
+  </head>
+  <body onload="firstField()">
+    
+    <!-- Box display element -->
+    <div class="box text">
+      <h1>Mortgage Calculator</h1>
+        <div class="sidemargin">
+
+     <!-- form for the calculator -->
+             <form class="form" action="" onreset="firstField()">
+               <label>APR:
+                 <input name="APR" id="apr" value="">
+               </label>
+                   <br>
+               <label>Loan Term:
+                 <input name="Loan Term" id="loanterm" value="">
+               </label>
+                   <br>
+               <label>Loan Amount:
+                 <input name="Loan Amount" id="loanamount" value="">
+               </label>    
+                   <br>
+               <label>Monthly Payment:
+                 <input name="Monthly Payment" id="monthlypayment" value="">
+               </label>
+                   <br>
+              
+           <!-- Submit and reset buttons  --> 
+               <input type="button" value="Submit" onClick="calculateFunc()">
+               <input type="reset" value="Clear">
+             </form>
+       </div>
+     </div>
+   </body>
+ </html>
+

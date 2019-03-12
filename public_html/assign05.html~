@@ -1,0 +1,296 @@
+  <!DOCTYPE html>
+         <!-- This is assignment 5 -->
+  <html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="assign05.css">
+    <title>Flower Shop</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--  JavaScript script  -->
+      <script type="text/javascript">
+ 
+    /* function to validate personal information */
+        
+           function validPersonalInfo ()  {
+          /* from here on out, check info whenever updated  */
+            var valid = 1;
+             var text = document.getElementsByClassName("textfield");
+             emptyError = document.getElementsByClassName("empty");
+            phone = document.getElementById("phone");
+            card = document.getElementById("cardnumber");
+           expirationMonth = document.getElementById("expirationMonth");
+           expirationYear = document.getElementById("expirationYear");
+           checkMonth = expirationMonth.value.search(/^[0-1][0-9]$/);
+           checkYear = expirationYear.value.search(/^20[1-9][6-9]$/);
+           checkphone = phone.value.search(/^\d{3}-\d{3}-\d{4}$/);
+           checkcard = card.value.search(/^\d{4}-\d{4}-\d{4}-\d{4}$/);
+           cardError = document.getElementById("cardFormatError");
+           phoneError = document.getElementById("phoneFormatError");
+
+             for (i = 0; i < text.length; i++) {
+                 text[i].onchange="validPersonalInfo()";
+            }
+            if (checkMonth < 0) {
+               monthError.style.display = "block";
+               document.getElementById("expirationMonth").focus();
+           } else {
+               monthError.style.display = "none";
+           }
+           if (checkYear < 0) {
+              yearError.style.display = "block";
+              document.getElementById("expirationYear").focus();
+           } else {
+               yearError.style.display = "none";
+            }
+           if (checkcard < 0 && card.value != "") {
+                cardError.style.display = "block";
+                 document.getElementById("cardnumber").focus();
+           } else {
+                cardError.style.display = "none";
+             }
+           
+               if (checkphone < 0) {
+                phoneError.style.display = "block";
+                document.getElementById("phone").focus();
+           } else {
+                phoneError.style.display = "none";
+           }
+
+
+          var max = text.length - 1;
+             for (t = max, e = max; t != -1; t--, e--) {
+                if (text[t].value == "") {
+                   emptyError[e].style.display = "block";
+                    text[t].focus();
+                    valid = 0;
+                  } else {
+                   emptyError[e].style.display = "none";
+                 }
+             }
+     }
+                   
+
+  /* function to calculate total */
+   function computeTotal () {
+      Total = document.getElementById("total");
+      var total = 0;
+      Price = document.getElementsByClassName("price");
+      Flower = document.getElementsByClassName("flower");
+      Quantity = document.getElementsByClassName("qty");
+         for (p=0, f=0, q=0; q < Price.length; q++,p++,f++) {
+             if (Flower[f].checked) {
+                 total = total + (Price[p].value * Quantity[q].value);
+             }
+         }
+        total = total.toFixed(2);
+        Total.value = total;
+     }
+
+   function firstfield () {
+       var x = document.getElementsByTagName("input");
+       x[0].focus();
+}
+
+    function upperCase(id) {
+      var x = document.getElementById(id);
+      x.value = x.value.toUpperCase();
+}
+
+      </script>
+    <style>
+   /* error messages  */
+        #fnameError {
+           display: none;
+           color: red;
+        }
+        
+        #monthError {
+           display: none;
+           color: red;
+        }
+        #emptyMonth {
+           display: none;
+           color: red;
+        }
+       #yearError {
+          display: none;
+          color: red;
+       }
+      #emptyYear {
+         display: none;
+         color: red;
+       }
+        #lnameError {
+           display: none;
+           color: red;
+        }
+ 
+        #addressError {
+           display: none;
+           color: red;
+       }
+
+       #phoneError {
+           display: none;
+           color: red;
+       }
+ 
+       #phoneFormatError {
+           display: none;
+           color: red;
+       }
+       #cardError {
+          display: none;
+          color: red;
+       }
+    #cardFormatError {
+         display: none;
+         color: red;
+       }
+
+ /* class for numbers to compute on */
+     .price {
+        display: none;
+     }
+
+/* class for empty error messages   */
+    .empty {
+  }
+    .textfield {
+}
+ 
+.qty {
+}
+.flower {
+}
+    </style>
+  </head>
+  <body onload="firstfield()">
+
+       <!-- The header -->
+    <div id="header">
+      <h1>Steven's Flower Shop</h1>
+      <p>Best flowers in town.</p>
+    </div>
+
+    <!-- Navigation bar -->
+    <div class="menu">
+      <a href="#About">About Us</a>
+      <a href="#contact">Contact Us</a>
+    </div>
+
+    <h1 class="title">Provide your personal information here.</h1>
+ 
+    <form action="" onreset="firstfield()" onsubmit="validPersonalInfo()">
+  <div class="form"> 
+   <!-- Input personal information -->
+       <p id="fnameError" class="empty">* required field.</p>
+       <label for="fname">First Name</label>
+       <input type="text" id="fname" name="fbyname" class="textfield" value="" placeholder="Your First Name" onblur="upperCase('fname')">
+       
+       <p id="lnameError" class="empty">* required field.</p>
+       <label for="lname">Last Name</label>
+       <input type="text" id="lname" class="textfield" value="" placeholder="Your Last Name" onblur="upperCase('lname')">
+     
+      <p id="addressError" class="empty">* required field.</p>
+      <label for="address">Your Address (street address, city, state, zip)</label>
+       <textarea id="address" class="textfield" cols="50" rows="4" value="">
+       </textarea>
+     
+      <p id="phoneFormatError">* incorrect format.</p>
+      <p id="phoneError" class="empty">* required field.</p>
+       <label for="phone">Your phone number</label> 
+       <input type="text" id="phone" class="textfield" value="" placeholder="000-000-0000" onchange="validPersonalInfo()">
+
+   <!-- Credit Card Number must be 16 digits-->
+   <br> <label for="cardnumber">Enter Card Number</label>
+     <p id="cardFormatError">* incorrect format: 16 digits required.</p>
+     <p id="cardError" class="empty">* required field.</p>
+    <input type="text" id="cardnumber" class="textfield" value="" placeholder="0000-0000-0000-0000" onchange="validPersonalInfo()">
+  <!-- Expiration date: valid: (1 - 12)year: > 2016 -->
+     <label>Enter your Debit or Credit Card Information</label> <br><br>
+    <input type="radio" name="CardType" value="visa">Visa<br>
+    <input type="radio" name="CardType" value="mastercard">MasterCard<br>
+    <input type="radio" name="CardType" value="americanexpress">American Express<br>
+   
+    <label for="expirationMonth">Expiration Date Month</label>
+     <p id="emptyMonth" class="empty">* required field.</p>
+     <p id="monthError">* incorrect format.</p>
+    <input type="text" id="expirationMonth" class="textfield" value="" placeholder="mm" onchange="validPersonalInfo()">
+  
+    <label for="expirationYear">Expiration Date Year</label>
+     <p id="emptyYear" class="empty">* required field.</p>
+     <p id="yearError">* incorrect format.</p>
+     <input type="text" id="expirationYear" class="textfield" value="" placeholder="yyyy" onchange="validPersonalInfo()">
+
+   </div>
+   <div class="picture">
+      <img src="RedRose.jpg" alt="Bouquet of Roses">
+   </div> 
+    <!-- Item selection table with min of 4 check boxes -->
+     <h1 class="title">Shop here</h1>
+       <table id="store">
+         <tr>
+           <th>Flower</th>
+           <th>Price</th>
+           <th>Qty.</th>
+           <th>Select</th>
+         </tr>
+         <tr>
+           <td>One Dozen RedRoses</td>
+           <td>$40.00</td>
+           <input class="price" value="40" name="some">
+           <td><input maxlength="2" size="2" class="qty" value="1" onchange="computeTotal()"></td>
+           <td><input type="checkbox" class="flower" name="flower" value="Rose" onchange="computeTotal()"> </td>
+         </tr>
+         <tr>
+           <td>Petuna</td>
+           <td>$2.99</td>
+           <input class="price" name="some" value="2.99">
+           <td><input maxlength="2" size="2" class="qty" value="1" onchange="computeTotal()"> </td>
+           <td><input type="checkbox" class="flower" name="flower" value="Petuna" onchange="computeTotal()"> </td>
+         </tr>
+         <tr>
+           <td>Daisy</td>
+           <td>$2.19</td>
+           <input class="price" value="2.19" name="some">
+           <td><input maxlength="2" size="2" class="qty" value="1" onchange="computeTotal()"></td>
+           <td> <input type="checkbox" class="flower" name="flower" value="Daisy" onchange="computeTotal()"></td>
+         </tr>
+         <tr>
+           <td>Blue Flower</td>
+           <td>$3.50</td>
+           <input class="price" value="3.5" name="some">
+           <td><input maxlength="2" size="2" class="qty" value="1" onchange="computeTotal()"></td>
+           <td><input type="checkbox" class="flower" name="flower" value="Blue" onchange="computeTotal()"></td>
+         </tr>
+         <tr>
+           <td>White Carnation</td>
+           <td>$4.30</td>
+           <input class="price" value="4.30" name="some">
+           <td><input maxlength="2" size="2" class="qty" value="1" onchange="computeTotal()"></td>
+           <td><input type="checkbox" class="flower" name="flower" value="White" onchange="computeTotal()"></td>
+         </tr>
+       </table>
+     
+   <!-- Display total amount field -->
+    <span class="TotalLabel">Total: $</span>
+    <input name="total" id="total" value="" disabled="true">
+    <input class="button" type="button" value="Submit" onclick="validPersonalInfo()">
+    <input class="button" type="reset" value="Clear">
+ </form>
+</div>
+ <!-- A disabled button to checkout purchase that when enabled, takes the customer to checkout
+      when clicked. -->
+  
+    <div id="About" class="contact">
+       <h1>Contact Us</h1>
+       <p>stuff about us</p>
+    <div>
+    <footer>
+ 
+    </footer>
+  
+  </body>
+  </html>

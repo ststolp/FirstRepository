@@ -1,0 +1,114 @@
+       * {
+              box-sizing: border-box;
+          }
+        body {
+          margin: 0;
+        }
+          .row::after {
+            content:"":
+            clear: both;
+            display: table;
+          }
+
+          .grid-container {
+               display: grid;
+               grid-template-columns: auto auto auto auto;
+               grid-gap: 10px;
+               margin: 0;
+               background-color: LightBlue;
+               padding: 2% 2%;
+          }
+
+          .grid-container > div {
+              background-color: Lavender;
+              text-size: 100%;
+              text-align: center;
+              color: LightSlateGrey;
+              padding: 2%;
+          }
+         
+         
+          [class*="col-1"] {
+             float: left;
+             padding: 15px;
+          }
+
+          [class*="col-2"] {
+             width: 100%;
+          }
+       @media only screen and (min-width: 768px) {
+          .col-1 {width: 25%; }
+          .col-2 {width: 100%; }
+          .col-3 {width: 50%;  }
+        }
+
+       .flex-container {
+          width: 100%;
+          display: flex;
+          flex-direciton: column;
+          background-color: rgb(169,131,93);
+          padding-bottom: 20px;
+       }
+
+       .flex-container > div {
+          width: 100%;
+          margin: 0;
+          font-size: 100%;
+          font-family: Helvetica, sans-serif;
+          color: rgb(100, 85, 35);
+          padding-left: 2%;
+          padding-right: 2%;
+       }
+     div > div > p.content {
+          font-size: 100%;
+          font-family: Helvetica, sans-serif;
+          color: rgb(100, 85, 35);
+          padding-left: 4%;
+          padding-right: 4%;
+     }
+   
+      div.flex-container > div > p.caption {
+          font-family: Helvetica, sans-serif;
+          color: Lavender;
+          color: rgb(253, 215, 18);
+          border-left: 5px solid orange;
+          padding-left: 1%;
+       }
+          .rwd {
+            width: 75%;
+            max-width: 100%;
+            height: auto;
+            transform: rotate(90deg);
+            transform-origin: 50% 50%;
+            padding-top: 80px;
+            padding-bottom: 80px;
+        }
+
+         .side-margin {
+           padding-left: 3%;
+           padding-right: 3%;
+          background-color: rgb(169,131,93);;
+         }
+           h1.title {
+              font-family: Helvetica, sans-serif;
+              text-align: center;
+              background-color: midnightblue;
+              padding-top: 2%;
+              padding-bottom: 2%;
+              margin: 0;             
+              color: Lavender;      
+       }
+   /*      p.head {
+               font-family: Helvetica, sans-serif;
+               color: MidnightBlue;
+        }
+          p.content {
+             font-family: Helvetica, sans-serif;
+             color: red;
+        }
+          p.caption {
+            border-left: 10px solid rgb(200%,200%,200%);
+        }
+          footer {
+
+        } */

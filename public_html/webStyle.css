@@ -1,0 +1,105 @@
+* {
+    box-sizing: border-box;
+}
+
+/* background */
+body {
+   background-color: rgba(225,225,0,0.5);
+   color: hsl(33, 47%,17%);  
+   margin: 0;
+   font-family: Helvetica, sans-serif;
+}
+
+/* Style for top header */
+.header {
+     background-color:hsl(10,90%,50%);
+     text-align: center;
+     margin: 0;
+     padding: 3%;
+}
+
+/* style for the "Knights" word in title */
+.knights {
+     color:rgb(15,15,15);
+     font-family: Georgia, serif;
+}
+
+/* For the "&" symbol in the title  */
+.amp {
+    color: yellow;
+    font-family: Times New Roman, serif;
+}
+
+/* Style for "dragons" portion of title */
+.dragons {
+    color: orange;
+    font-family: Lucida Sans Unicode;
+    letter-spacing: 6px;
+}
+
+/* navbar container */
+.menu {
+     overflow: hidden;
+     background-color: #333;
+}
+
+/* navbar anchors */
+.menu a {
+     float: left;
+     display: block;
+     color: #f2f2f2;
+     text-align: center;
+     text-decoration: none;
+     padding: 14px 16px;
+}
+
+/* navbar "hover" attributes */
+.menu a:hover {
+     background-color: #ddd;
+     color: black;
+}
+
+/* Style for pictures that are right side up */
+.noturn {
+     width: 100%;
+     padding: 10%
+}
+
+/* For pictures that are side-ways */
+.turn {
+     width: 100%;
+     transform: rotate(90deg);
+     transform-origin: 50% 50%;
+     padding: 5%
+}
+
+/* Splits pages in 3 columns */
+.layout {
+    column-count: 3;
+}
+
+/* Style for the footer */
+footer {
+     background-color: #333;
+     color: yellow;
+     padding: 2%;
+     text-align: left;
+}
+
+/* Design for lift-aligned borders */
+.border {
+     border-left: 6px solid rgb(255,10,10);
+}
+
+/* Design for all header ones */
+h1 {
+  color: rgb(255, 165,0);
+  font-family: Lucida Sans Unicode;
+}
+
+/* Styles for description text under the title */
+.welcomeheader {
+   color: hsl(50, 90%,60%);
+   font-family: sans-serif;
+   text-shadow: 3px 3px 2px hsl(50,90%,40%);
+}
