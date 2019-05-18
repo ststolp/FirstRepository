@@ -266,8 +266,6 @@ class K: public Piece
     }
 
     bool validateMove(int x, int y, map<string, Piece *> pieces, map<string,  Piece *>:: iterator itr, int player){
-        if (x == 0 || x == 9 || y == 0 || y == 9) 
-            return false;
         if (collision(x, y, pieces, itr)) 
             return false;
         if (checkMate(x, y, pieces, itr, player))
